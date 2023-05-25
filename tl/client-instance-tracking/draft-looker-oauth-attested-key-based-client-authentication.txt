@@ -1,0 +1,475 @@
+
+
+
+
+Web Authorization Protocol                                     T. Looker
+Internet-Draft                                                     MATTR
+Intended status: Informational                               16 May 2023
+Expires: 17 November 2023
+
+
+            OAuth2 Attested Key Based Client Authentication
+   draft-looker-oauth-attested-key-based-client-authentication-latest
+
+Abstract
+
+   This specification defines a new method of client authentication for
+   OAuth2 [RFC6749] by extending the approach defined in [RFC7521].
+   This new method enables client deployments that are traditionally
+   viewed as public clients to be able to authenticate with the
+   authorization server through an attested key based authentication
+   scheme.
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   Status information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-looker-oauth-attested-key-
+   based-client-authentication/.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 17 November 2023.
+
+Copyright Notice
+
+   Copyright (c) 2023 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction
+   2.  Conventions and Definitions
+   3.  Client Authentication in the Token Request
+     3.1.  JWT Format and Processing Requirements
+       3.1.1.  Client Key Attestation JWT
+       3.1.2.  Client Key Attestation PoP JWT
+   4.  Implementation Considerations
+     4.1.  Re use of a Client Attestation JWT
+     4.2.  Refresh token binding
+   5.  Privacy Considerations
+     5.1.  Client Instance Tracking Across Authorization Servers
+   6.  Security Considerations
+   7.  IANA Considerations
+     7.1.  Sub-Namespace Registration of
+           urn:ietf:params:oauth:client-assertion-type:jwt-key-attestati
+           on
+     7.2.  Registration of attest_key_client_auth Token Endpoint
+           Authentication Method
+   8.  References
+     8.1.  Normative References
+     8.2.  Informative References
+   Acknowledgments
+   Author's Address
+
+1.  Introduction
+
+   [RFC7521] defines a way for a client to include an assertion in a
+   token request to an authorization server for the purposes of client
+   authentication.  This specification extends this mechanism to provide
+   a way for a client instance to authenticate it self with the
+   authorization server through an attested key based authentication
+   scheme.
+
+   The following diagram depicts the conceptual interactions.
+
+                              (3) Generate Client
+                                  Key Attestation
+                                  +-------+
+                                  |       |
+                                  |      \ /
+                              +---------------+
+                              |               |
+                              |               |
+                              |    Client     |
+                              |    Backend    |
+                              |               |
+                              |               |
+                              +---------------+
+                                 / \      |
+                                  |       |
+                (2) Request       |       |     (4) Repond with
+                Client Key        |       |     Generated Client
+                Attestation       |       |     Key Attestation
+                for generated     |       |
+                key               |       |
+                                  |       |
+                                  |      \ /
+                              +---------------+                          +---------------+
+                              |               |                          |               |
+                     +------->|               |<------------------------>|               |
+  (1) Generate       |        |    Client     |    (6) Interaction       | Authorization |
+  Attestation Key    |        |   Instance    |    using Client          |    Server     |
+                     +--------|               |    Key Attestation + PoP |               |
+                              |               |    for authentication    |               |
+                              +---------------+                          +---------------+
+                                 / \      |
+                                  |       |
+                                  +-------+
+                                (5) Generate
+                              Key Attestation PoP
+
+   Note defining the protocol for steps 2 and 4, including how the
+   client instance authenticates with the client backend is out of scope
+   of this specification.
+
+   This specification only defines the format of the client assertion
+   that a client instance uses to authenticate in its interactions with
+   an authorization server (indicated in step 6), which is comprised of
+   two key parts:
+
+   1.  A client key attestation - produced by the client backend.
+
+   2.  A client key attestation proof of possession (PoP) - produced by
+       the client instance.
+
+2.  Conventions and Definitions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+3.  Client Authentication in the Token Request
+
+   To perform client authentication using this scheme, the client
+   instance uses the following parameter values and encodings.
+
+   The value of the "client_assertion_type" is
+   "urn:ietf:params:oauth:client-assertion-type:jwt-key-attestation".
+
+   The value of the "client_assertion" parameter contains two JWTs,
+   separated by a '~' character.  It MUST NOT contain more or less than
+   precisely two JWTs seperated by the '~` character.  The first JWT
+   MUST be the client key attestation JWT defined in Section 3.1.1, the
+   second JWT MUST the client key attestation PoP defined in
+   Section 3.1.2.
+
+   The following example demonstrates client authentication using this
+   scheme during the presentation of an authorization code grant in an
+   access token request (with extra line breaks for display purposes
+   only):
+
+POST /token.oauth2 HTTP/1.1
+Host: as.example.com
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&
+code=n0esc3NRze7LTCu7iYzS6a5acc3f0ogp4&
+client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3A
+client-assertion-type%3Ajwt-key-attestation&
+client_assertion=eyJhbGciOiJSUzI1NiIsImtpZCI6IjIyIn0.
+eyJpc3Mi[...omitted for brevity...].
+cC4hiUPo[...omitted for brevity...]~eyJzI1NiIsImtphbGciOimtpZCI6IjIyIn0.
+IjIyIn0[...omitted for brevity...].
+iOiJSUzI1[...omitted for brevity...]
+
+3.1.  JWT Format and Processing Requirements
+
+   In order to authenticate the client using this scheme, the
+   authorization server MUST validate BOTH the JWTs present in the
+   "client_assertion" parameter according to the criteria below.
+
+   It is RECOMMENDED that the authorization server validate the Client
+   Key Attestation prior to validating the Client Key Attestation PoP.
+
+3.1.1.  Client Key Attestation JWT
+
+   The following rules apply to validating the client key attestation
+   JWT.  Application of additional restrictions and policy are at the
+   discretion of the authorization server.
+
+   1.   The JWT MUST contain an "iss" (issuer) claim that contains a
+        unique identifier for the entity that issued the JWT.  In the
+        absence of an application profile specifying otherwise,
+        compliant applications MUST compare issuer values using the
+        Simple String Comparison method defined in Section 6.2.1 of
+        [RFC3986].
+
+   2.   The JWT MUST contain a "sub" (subject) claim with a value
+        corresponding to the "client_id" of the OAuth client.
+
+   3.   The JWT MUST contain an "exp" (expiration time) claim that
+        limits the time window during which the JWT can be used.  The
+        authorization server MUST reject any JWT with an expiration time
+        that has passed, subject to allowable clock skew between
+        systems.
+
+   4.   The JWT MUST contain an "cnf" claim conforming [RFC7800] that
+        conveys the key to be used for sender constraining tokens issued
+        by the authorization server.  The key MUST be expressed using
+        the "jwk" representation.
+
+   5.   The JWT MAY contain an "nbf" (not before) claim that identifies
+        the time before which the token MUST NOT be accepted for
+        processing.
+
+   6.   The JWT MAY contain an "iat" (issued at) claim that identifies
+        the time at which the JWT was issued.
+
+   7.   The JWT MAY contain a "jti" (JWT ID) claim that provides a
+        unique identifier for the token.  The authorization server MAY
+        ensure that JWTs are not replayed by maintaining the set of used
+        "jti" values for the length of time for which the JWT would be
+        considered valid based on the applicable "exp" instant.
+
+   8.   The JWT MAY contain other claims.
+
+   9.   The JWT MUST be digitally signed using an asymmetric
+        cryptographic algorithm.  The authorization server MUST reject
+        the JWT if it is using a Message Authentication Code (MAC) based
+        algorithm.  The authorization server MUST reject JWTs with an
+        invalid signature.
+
+   10.  The authorization server MUST reject a JWT that is not valid in
+        all other respects per "JSON Web Token (JWT)" [RFC7519].
+
+   The following example is the decoded header and payload of a JWT
+   meeting the processing rules as defined above.
+
+   {
+     "alg": "ES256",
+     "kid": "11"
+   }
+   .
+   {
+     "iss": "https://client.example.com",
+     "sub": "https://client.example.com",
+     "nbf":1300815780,
+     "exp":1300819380,
+     "cnf": {
+       "jwk": {
+         "kty": "EC",
+         "use": "sig",
+         "crv": "P-256",
+         "x": "18wHLeIgW9wVN6VD1Txgpqy2LszYkMf6J8njVAibvhM",
+         "y": "-V4dS4UaLMgP_4fY4j8ir7cl1TXlFdAgcx55o7TkcSA"
+       }
+     }
+   }
+
+3.1.2.  Client Key Attestation PoP JWT
+
+   The following rules apply to validating the client key attestation
+   PoP JWT.  Application of additional restrictions and policy are at
+   the discretion of the authorization server.
+
+   1.   The JWT MUST contain an "iss" (issuer) claim with a value
+        corresponding to the "client_id" of the OAuth client.
+
+   2.   The JWT MUST contain an "exp" (expiration time) claim that
+        limits the time window during which the JWT can be used.  The
+        authorization server MUST reject any JWT with an expiration time
+        that has passed, subject to allowable clock skew between
+        systems.  Note that the authorization server may reject JWTs
+        with an "exp" claim value that is unreasonably far in the
+        future.
+
+   3.   The JWT MUST contain a "jti" (JWT ID) claim that provides a
+        unique identifier for the token.  The authorization server MAY
+        ensure that JWTs are not replayed by maintaining the set of used
+        "jti" values for the length of time for which the JWT would be
+        considered valid based on the applicable "exp" instant.
+
+   4.   The JWT MUST contain an "aud" (audience) claim containing a
+        value that identifies the authorization server as an intended
+        audience.  The [RFC8414] issuer identifier URL of the
+        authorization server MUST be used as a value for an "aud"
+        element to identify the authorization server as the intended
+        audience of the JWT.
+
+   5.   The JWT MAY contain an "nbf" (not before) claim that identifies
+        the time before which the token MUST NOT be accepted for
+        processing.
+
+   6.   The JWT MAY contain an "iat" (issued at) claim that identifies
+        the time at which the JWT was issued.  Note that the
+        authorization server may reject JWTs with an "iat" claim value
+        that is unreasonably far in the past.
+
+   7.   The JWT MAY contain other claims.
+
+   8.   The JWT MUST be digitally signed using an asymmetric
+        cryptographic algorithm.  The authorization server MUST reject
+        the JWT if it is using a Message Authentication Code (MAC) based
+        algorithm.  The authorization server MUST reject JWTs with an
+        invalid signature.
+
+   9.   The public key used to verify the JWT MUST be the key located in
+        the "cnf" claim of the corresponding client key attestation JWT.
+
+   10.  The authorization server MUST reject a JWT that is not valid in
+        all other respects per "JSON Web Token (JWT)" [RFC7519].
+
+   The following example is the decoded header and payload of a JWT
+   meeting the processing rules as defined above.
+
+   {
+     "alg": "ES256"
+   }
+   .
+   {
+     "iss": "https://client.example.com",
+     "aud": "https://as.example.com",
+     "nbf":1300815780,
+     "exp":1300819380,
+   }
+
+4.  Implementation Considerations
+
+4.1.  Re use of a Client Attestation JWT
+
+   Implementers should be aware that the design of this authentication
+   mechanism deliberately allows for a client instance to re-use a
+   single Client Attestation JWT in multiple interactions/requests with
+   an authorization server, whilst producing a fresh Client Attestation
+   PoP JWT.  Client deployments should consider this when determining
+   the validity period for issued Client Attestation JWTs as this
+   ultimately controls how long a client instance can re-use a single
+   Client Attestation JWT.
+
+4.2.  Refresh token binding
+
+   Authorization servers issuing a refresh token in response to a token
+   request using the "urn:ietf:params:oauth:client-assertion-type:jwt-
+   key-attestation" client authentication method MUST bind the refresh
+   token to the client instance, and NOT just the client as specified in
+   section 6 [@!RFC6749].  To prove this binding, the client instance
+   MUST authenticate itself to the authorization server when refreshing
+   an access token using the "urn:ietf:params:oauth:client-assertion-
+   type:jwt-key-attestation" authentication method.  The client MUST
+   also use the same client attestation key that was used for
+   authentication when the refresh token was issued.
+
+5.  Privacy Considerations
+
+5.1.  Client Instance Tracking Across Authorization Servers
+
+   Implementers should be aware that using the same client attestation
+   across multiple authorization servers could result in correlation of
+   the end user using the client instance through claim values
+   (including the public key in the cnf claim).  Client deployments are
+   therefore RECOMMENDED to use different client attestations across
+   different authorization servers.
+
+6.  Security Considerations
+
+   TODO
+
+7.  IANA Considerations
+
+7.1.  Sub-Namespace Registration of urn:ietf:params:oauth:client-
+      assertion-type:jwt-key-attestation
+
+   This section registers the value "client-assertion-type:jwt-key-
+   attestation" in the IANA "OAuth URI" registry established by "An IETF
+   URN Sub-Namespace for OAuth" [RFC6755].
+
+   o URN: urn:ietf:params:oauth:client-assertion-type:jwt-key-
+   attestation o Common Name: OAuth2 Attested Key Based Client
+   Authentication Authentication o Change Controller: IESG o
+   Specification Document: TBC
+
+7.2.  Registration of attest_key_client_auth Token Endpoint
+      Authentication Method
+
+   This section registers the value "attest_key_client_auth" in the IANA
+   "OAuth Token Endpoint Authentication Methods" registry established by
+   OAuth 2.0 Dynamic Client Registration Protocol [RFC7591].
+
+   o Token Endpoint Authentication Method Name: "attest_key_client_auth"
+   o Change Controller: IESG o Specification Document(s): TBC
+
+8.  References
+
+8.1.  Normative References
+
+   [DPOP]     Fett, D., Campbell, B., Bradley, J., Lodderstedt, T.,
+              Jones, M., and D. Waite, "OAuth 2.0 Demonstrating Proof-
+              of-Possession at the Application Layer (DPoP)", n.d..
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
+              Resource Identifier (URI): Generic Syntax", STD 66,
+              RFC 3986, DOI 10.17487/RFC3986, January 2005,
+              <https://www.rfc-editor.org/rfc/rfc3986>.
+
+   [RFC6755]  Campbell, B. and H. Tschofenig, "An IETF URN Sub-Namespace
+              for OAuth", RFC 6755, DOI 10.17487/RFC6755, October 2012,
+              <https://www.rfc-editor.org/rfc/rfc6755>.
+
+   [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
+              (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
+              <https://www.rfc-editor.org/rfc/rfc7519>.
+
+   [RFC7591]  Richer, J., Ed., Jones, M., Bradley, J., Machulak, M., and
+              P. Hunt, "OAuth 2.0 Dynamic Client Registration Protocol",
+              RFC 7591, DOI 10.17487/RFC7591, July 2015,
+              <https://www.rfc-editor.org/rfc/rfc7591>.
+
+   [RFC7638]  Jones, M. and N. Sakimura, "JSON Web Key (JWK)
+              Thumbprint", RFC 7638, DOI 10.17487/RFC7638, September
+              2015, <https://www.rfc-editor.org/rfc/rfc7638>.
+
+   [RFC7800]  Jones, M., Bradley, J., and H. Tschofenig, "Proof-of-
+              Possession Key Semantics for JSON Web Tokens (JWTs)",
+              RFC 7800, DOI 10.17487/RFC7800, April 2016,
+              <https://www.rfc-editor.org/rfc/rfc7800>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC8414]  Jones, M., Sakimura, N., and J. Bradley, "OAuth 2.0
+              Authorization Server Metadata", RFC 8414,
+              DOI 10.17487/RFC8414, June 2018,
+              <https://www.rfc-editor.org/rfc/rfc8414>.
+
+8.2.  Informative References
+
+   [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
+              RFC 6749, DOI 10.17487/RFC6749, October 2012,
+              <https://www.rfc-editor.org/rfc/rfc6749>.
+
+   [RFC7521]  Campbell, B., Mortimore, C., Jones, M., and Y. Goland,
+              "Assertion Framework for OAuth 2.0 Client Authentication
+              and Authorization Grants", RFC 7521, DOI 10.17487/RFC7521,
+              May 2015, <https://www.rfc-editor.org/rfc/rfc7521>.
+
+Acknowledgments
+
+   TODO acknowledge.
+
+Author's Address
+
+   Tobias Looker
+   MATTR
+   Email: tobias.looker@mattr.global
