@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-05-25T00:50:59.519339+00:00",
+  "timestamp": "2023-05-28T00:55:45.937457+00:00",
   "repo": "vcstuff/draft-looker-oauth-attested-key-based-client-authentication",
   "labels": [
     {
@@ -632,7 +632,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-05-22T16:08:04Z",
-      "updatedAt": "2023-05-23T07:43:03Z",
+      "updatedAt": "2023-05-26T13:40:31Z",
       "baseRepository": "vcstuff/draft-looker-oauth-attested-key-based-client-authentication",
       "baseRefName": "main",
       "baseRefOid": "071f2a30565a4428394ab157325fffd212a47277",
@@ -694,6 +694,86 @@
               "body": "Why not just use the same client attestation JWT? That would not require any client instance identification and is also not a privacy issue. \r\n\r\nurn:ietf:params:oauth:client-assertion-type:jwt-key-attestation -> urn:ietf:params:oauth:client-assertion-type:jwt-client-attestation",
               "createdAt": "2023-05-23T07:32:42Z",
               "updatedAt": "2023-05-23T07:32:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5WH6z9",
+          "commit": {
+            "abbreviatedOid": "2208c9a"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-26T03:05:32Z",
+          "updatedAt": "2023-05-26T03:05:33Z",
+          "comments": [
+            {
+              "originalPosition": 54,
+              "body": "This text feels a bit more complex to me? I think the previous text was a bit clearer in this explanation?",
+              "createdAt": "2023-05-26T03:05:32Z",
+              "updatedAt": "2023-05-26T03:05:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5WH69M",
+          "commit": {
+            "abbreviatedOid": "2208c9a"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-26T03:06:41Z",
+          "updatedAt": "2023-05-26T03:06:42Z",
+          "comments": [
+            {
+              "originalPosition": 57,
+              "body": "schema is a bit of a loaded word here I think the JWT processing section already makes it clear AS and clients are permitted to add what ever else they wish to the JWTs\r\n```suggestion\r\nThis specification only defines the format of the Client Assertion JWT that a client instance uses to authenticate in its interactions with an authorization server (indicated in step 6), which is comprised of two key parts:\r\n```",
+              "createdAt": "2023-05-26T03:06:41Z",
+              "updatedAt": "2023-05-26T03:06:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5WH7AZ",
+          "commit": {
+            "abbreviatedOid": "2208c9a"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-26T03:07:07Z",
+          "updatedAt": "2023-05-26T03:07:07Z",
+          "comments": [
+            {
+              "originalPosition": 61,
+              "body": "```suggestion\r\n1. A client attestation JSON Web Token (JWT)- produced by the client backend.\r\n```",
+              "createdAt": "2023-05-26T03:07:07Z",
+              "updatedAt": "2023-05-26T03:07:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5WNC7X",
+          "commit": {
+            "abbreviatedOid": "2208c9a"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-26T13:40:30Z",
+          "updatedAt": "2023-05-26T13:40:30Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "A well know data structure that defines the data an attestation should, shall or may, contain\r\n\r\nShould It be a defined term?\r\n",
+              "createdAt": "2023-05-26T13:40:30Z",
+              "updatedAt": "2023-05-26T13:40:30Z"
             }
           ]
         }
