@@ -4,8 +4,9 @@
 
 Web Authorization Protocol                                     T. Looker
 Internet-Draft                                                     MATTR
-Intended status: Informational                               17 May 2023
-Expires: 18 November 2023
+Intended status: Informational                                P. Bastian
+Expires: 1 December 2023                            Bundesdruckerei GmbH
+                                                             30 May 2023
 
 
             OAuth2 Attested Key Based Client Authentication
@@ -43,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 November 2023.
+   This Internet-Draft will expire on 1 December 2023.
 
 Copyright Notice
 
@@ -83,7 +84,7 @@ Table of Contents
      8.1.  Normative References
      8.2.  Informative References
    Acknowledgments
-   Author's Address
+   Authors' Addresses
 
 1.  Introduction
 
@@ -468,8 +469,13 @@ Acknowledgments
 
    TODO acknowledge.
 
-Author's Address
+Authors' Addresses
 
    Tobias Looker
    MATTR
    Email: tobias.looker@mattr.global
+
+
+   Paul Bastian
+   Bundesdruckerei GmbH
+   Email: paul.bastian@bdr.de
