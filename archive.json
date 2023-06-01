@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-05-28T00:55:45.937457+00:00",
+  "timestamp": "2023-06-01T01:08:54.129330+00:00",
   "repo": "vcstuff/draft-looker-oauth-attested-key-based-client-authentication",
   "labels": [
     {
@@ -264,7 +264,7 @@
       "labels": [],
       "body": "I'm struggling with the terminology currently used in this draft. For me, it describes a mechanism to use JWTs to authenticate OAuth clients. \r\n\r\nHowever, the draft currently designates those JWTs as \"Key Attestation\" or \"attestation key\" or \"jwt-key-attestation\", which sounds like the focus is on attesting something about a certain key to the AS. But that's obviously not the case since, this draft is about client authentication and the key is \"just\" used to protect the JWT against replay. \r\n\r\nI think the name is confusing and suggest to change it to \"Client Attestation\". ",
       "createdAt": "2023-05-16T13:45:01Z",
-      "updatedAt": "2023-05-22T16:22:45Z",
+      "updatedAt": "2023-05-31T01:21:47Z",
       "closedAt": null,
       "comments": [
         {
@@ -283,17 +283,31 @@
         },
         {
           "author": "paulbastian",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "@tlodderstedt thats a proposal for the title of the RFC I guess? I'm ok with that..\r\nI propose \"Client Attestation JWT\" for the actual thing, that we call wallet attestation in our scenario",
           "createdAt": "2023-05-19T16:27:53Z",
           "updatedAt": "2023-05-19T16:27:53Z"
         },
         {
           "author": "paulbastian",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Renaming the Client Attestation covered by #11 .\r\nRenaming topic in this issue is about the title?",
           "createdAt": "2023-05-22T16:22:45Z",
           "updatedAt": "2023-05-22T16:22:45Z"
+        },
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "After thinking about this more I propose \"Attestation Based Client Authentication for OAuth 2\"",
+          "createdAt": "2023-05-30T21:47:55Z",
+          "updatedAt": "2023-05-30T21:47:55Z"
+        },
+        {
+          "author": "tlodderstedt",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "What is the meaning of this title? What does \"Attestation based\" mean?",
+          "createdAt": "2023-05-31T01:21:47Z",
+          "updatedAt": "2023-05-31T01:21:47Z"
         }
       ]
     },
@@ -426,6 +440,78 @@
       "updatedAt": "2023-05-22T15:52:23Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 12,
+      "id": "I_kwDOJaEkaM5nOgXk",
+      "title": "Why not just use the same client attestation JWT? That would not require any client instance identification and is also not a privacy issue.",
+      "url": "https://github.com/vcstuff/draft-looker-oauth-attested-key-based-client-authentication/issues/12",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "              Why not just use the same client attestation JWT? That would not require any client instance identification and is also not a privacy issue. \r\n\r\nurn:ietf:params:oauth:client-assertion-type:jwt-key-attestation -> urn:ietf:params:oauth:client-assertion-type:jwt-client-attestation\r\n\r\n_Originally posted by @tlodderstedt in https://github.com/vcstuff/draft-looker-oauth-attested-key-based-client-authentication/pull/11#discussion_r1201683953_\r\n            ",
+      "createdAt": "2023-05-30T09:15:06Z",
+      "updatedAt": "2023-05-30T09:15:06Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 13,
+      "id": "I_kwDOJaEkaM5nQFkc",
+      "title": "Client Key Attestation JWT Example",
+      "url": "https://github.com/vcstuff/draft-looker-oauth-attested-key-based-client-authentication/issues/13",
+      "state": "OPEN",
+      "author": "fmarino-ipzs",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "In the example in section 3.1.1. the issuer and the sub parameters should not be the same since the Wallet provider and the wallet instance are distinct entities. The private key in sole control of the wallet instance is referenced in the attestation while the subject refers to the Wallet Provider. \r\n\r\nMoreover, is the given example meant to be normative? I'm asking since in the example we find the JWS header parameter kid without any explanatory text about the key resolution mechanism allowed in the specs. (x5c, trust_chain, jwk)\r\n\r\n",
+      "createdAt": "2023-05-30T13:22:00Z",
+      "updatedAt": "2023-05-30T13:22:00Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 14,
+      "id": "I_kwDOJaEkaM5nQJz8",
+      "title": "The Entity Attestation Token (EAT)",
+      "url": "https://github.com/vcstuff/draft-looker-oauth-attested-key-based-client-authentication/issues/14",
+      "state": "OPEN",
+      "author": "peppelinux",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Is there any considerations about adopting *The Entity Attestation Token (EAT)* [draft-ietf-rats-eat-12](https://datatracker.ietf.org/doc/draft-ietf-rats-eat/12/) for the Attestation JWT?",
+      "createdAt": "2023-05-30T13:31:55Z",
+      "updatedAt": "2023-05-30T13:31:55Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 15,
+      "id": "I_kwDOJaEkaM5nQSkv",
+      "title": "Security levels in the attestation",
+      "url": "https://github.com/vcstuff/draft-looker-oauth-attested-key-based-client-authentication/issues/15",
+      "state": "OPEN",
+      "author": "fmarino-ipzs",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Since the EUDI Wallet instance may have different level of security depending on its own hardware and/or software capabilities, here the proposal: define a claim name for exposing different level of security of the wallet instance.\r\n\r\nExample:\"gold\", \"silver\" and \"bronze\" or \"high\", \"medium\", \"low\" depending on the framework used. \r\n\r\nThis proposal enables the security evaluation to the credential issuing side (or any other Relying Party) without knowing any specific hardware or software features (e.g. OS, etc.). ",
+      "createdAt": "2023-05-30T13:52:15Z",
+      "updatedAt": "2023-05-30T15:18:52Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The RFC may be used to issue wallet attestations in the eIDAS use case, giving additional information on the key type of the `cnf` and the user authenticaiton mechanisms, see more info [here](https://www.linkedin.com/feed/update/urn:li:activity:7056179875635724289/). A Wallet alone does not achieve a LoA but only supports the issuer in achieving an LoA for the lifecycle of an issues credential. However, a claim `supported_LoA` could be useable",
+          "createdAt": "2023-05-30T15:18:52Z",
+          "updatedAt": "2023-05-30T15:18:52Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -627,18 +713,18 @@
       "url": "https://github.com/vcstuff/draft-looker-oauth-attested-key-based-client-authentication/pull/11",
       "state": "OPEN",
       "author": "paulbastian",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2023-05-22T16:08:04Z",
-      "updatedAt": "2023-05-26T13:40:31Z",
+      "updatedAt": "2023-05-31T01:19:25Z",
       "baseRepository": "vcstuff/draft-looker-oauth-attested-key-based-client-authentication",
       "baseRefName": "main",
       "baseRefOid": "071f2a30565a4428394ab157325fffd212a47277",
       "headRepository": "paulbastian/draft-looker-oauth-attested-key-based-client-authentication",
       "headRefName": "main",
-      "headRefOid": "2208c9a8074acb0820deb324a0af9598fd73183b",
+      "headRefOid": "bc8440356100604e9e5451c704577dc5a779a082",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -776,6 +862,460 @@
               "updatedAt": "2023-05-26T13:40:30Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5Wf73e",
+          "commit": {
+            "abbreviatedOid": "346ebf2"
+          },
+          "author": "tlodderstedt",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2023-05-30T15:14:03Z",
+          "updatedAt": "2023-05-30T15:28:17Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "yes",
+              "createdAt": "2023-05-30T15:14:03Z",
+              "updatedAt": "2023-05-30T15:28:17Z"
+            },
+            {
+              "originalPosition": 54,
+              "body": "```suggestion\r\nNote: the protocols for obtaining Client Attestation JWTs (steps 2 and 4) is out of scope of this specification.\r\n```",
+              "createdAt": "2023-05-30T15:17:05Z",
+              "updatedAt": "2023-05-30T15:28:17Z"
+            },
+            {
+              "originalPosition": 61,
+              "body": "```suggestion\r\n1. A client attestation JWT - produced by the client backend.\r\n```",
+              "createdAt": "2023-05-30T15:17:43Z",
+              "updatedAt": "2023-05-30T15:28:17Z"
+            },
+            {
+              "originalPosition": 141,
+              "body": "```suggestion\r\nAuthorization servers issuing a refresh token in response to a token request using the \"urn:ietf:params:oauth:client-assertion-type:jwt-key-attestation\" client authentication method MUST bind the refresh token to the client instance, and NOT just the client as specified in section 6 [@!RFC6749]. To prove this binding, the client instance MUST authenticate itself to the authorization server when refreshing an access token using the \"urn:ietf:params:oauth:client-assertion-type:jwt-key-attestation\" authentication method. The client MUST also use the same Client Attestation that was used for authentication when the refresh token was issued.\r\n```",
+              "createdAt": "2023-05-30T15:18:35Z",
+              "updatedAt": "2023-05-30T15:28:17Z"
+            },
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\nThis specification defines a new method of client authentication for OAuth 2.0 {{RFC6749}} by extending the approach defined in {{RFC7521}}. This new method enables client deployments that are traditionally viewed as public clients to be able to authenticate with the authorization server through an attestation based authentication scheme.\r\n```",
+              "createdAt": "2023-05-30T15:19:28Z",
+              "updatedAt": "2023-05-30T15:28:17Z"
+            },
+            {
+              "originalPosition": 12,
+              "body": "```suggestion\r\n{{RFC7521}} defines a way for a client to include an assertion in a token request to an authorization server for the purposes of client authentication. This specification extends this mechanism to provide a way for a client instance to authenticate itself with the authorization server through an assertion that is bound to a public key (for proof of possession). This assertion is designated as Client Attestation.\r\n```",
+              "createdAt": "2023-05-30T15:19:47Z",
+              "updatedAt": "2023-05-30T15:28:17Z"
+            },
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\r\nThe Authorization Server will communicate its requirements for the client attestation through its metadata. A Client instance that wants to request an access token from this Authorization Server will need to obtain a Client Attestation JWT from its client backend first. Therefore the client will provide attestations to proof its genuineness and security (typically obtained from the platform) along with a fresh Client Instance Key to its backend. If the Client Backend successfully validates the attestation data and the proof of possession of the Client Instance Key, it will generate a signed Client Attestation JWT that is bound to the client instance key. As the Client Attestation JWT is cryptographically bound to the Client Instance Key generated by the client, the attestation is bound to this specific client instance. The client backend will respond to the client's request with this Client Attestation JWT. The client can proceed and generate a Client Attestation Proof of Possession (PoP) for the Client Instance Key. Lastly, the client sends both the Client Attestation JWT and the Client Attestation PoP with the Token Request to the Authorization Server. The Authorization Server will validate the client attestation and thus authenticates the client instance. The Authorization Server may continue to issue sender-constrained access tokens using DPoP.\r\n```",
+              "createdAt": "2023-05-30T15:25:54Z",
+              "updatedAt": "2023-05-30T15:28:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5WdJUe",
+          "commit": {
+            "abbreviatedOid": "4c0617b"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-30T09:10:44Z",
+          "updatedAt": "2023-05-30T16:17:51Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "Why is the Client Instance Key ephemeral? Is there an agreement that this key shall not be reused?",
+              "createdAt": "2023-05-30T09:10:44Z",
+              "updatedAt": "2023-05-30T16:17:51Z"
+            },
+            {
+              "originalPosition": 141,
+              "body": "opened as separate issue",
+              "createdAt": "2023-05-30T09:15:30Z",
+              "updatedAt": "2023-05-30T16:17:51Z"
+            },
+            {
+              "originalPosition": 54,
+              "body": "just wanted to clarify that its about protocols and data formats",
+              "createdAt": "2023-05-30T15:01:41Z",
+              "updatedAt": "2023-05-30T16:17:51Z"
+            },
+            {
+              "originalPosition": 14,
+              "body": "@tlodderstedt Do you prefer schema?",
+              "createdAt": "2023-05-30T15:03:43Z",
+              "updatedAt": "2023-05-30T16:17:51Z"
+            },
+            {
+              "originalPosition": 54,
+              "body": "outdated change",
+              "createdAt": "2023-05-30T15:59:10Z",
+              "updatedAt": "2023-05-30T16:17:51Z"
+            },
+            {
+              "originalPosition": 12,
+              "body": "outdated, but approved the change in my commit",
+              "createdAt": "2023-05-30T16:01:00Z",
+              "updatedAt": "2023-05-30T16:17:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5Wgpyx",
+          "commit": {
+            "abbreviatedOid": "bc84403"
+          },
+          "author": "tlodderstedt",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-05-30T16:51:23Z",
+          "updatedAt": "2023-05-30T16:51:23Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5Whmik",
+          "commit": {
+            "abbreviatedOid": "bc84403"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-30T19:11:37Z",
+          "updatedAt": "2023-05-30T19:11:38Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "```suggestion\r\n{{RFC7521}} defines a way for a client to include an assertion in a token request to an authorization server for the purposes of client authentication. This specification extends this assertion to be bound to a public key for proof of possession. This assertion is designated as Client Attestation.\r\n```",
+              "createdAt": "2023-05-30T19:11:37Z",
+              "updatedAt": "2023-05-30T19:11:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5Who6-",
+          "commit": {
+            "abbreviatedOid": "bc84403"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-30T19:18:46Z",
+          "updatedAt": "2023-05-30T19:18:47Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\r\nThe Authorization Server will communicate its requirements for the attestation scheme through its metadata. A Client instance that wants to request an access token from this Authorization Server will need to obtain a Client Attestation JWT, for example, from its client backend first. Therefore, the client will generate a key (Client Instance Key) and (platform specific) attestations to prove its authenticity and security to the client backend. The Client instance sends this data to the client backend in request for a Client Attestation JWT. If the Client Backend successfully validates the Client Instance Key and further data, it will generate a signed Client Attestation JWT. As the Client Attestation JWT is cryptographically bound to the Client Instance Key generated by the client, the attestation is bound to this particular client instance. The client backend will respond to the client's request by sending the Client Attestation JWT. The client can proceed and generate a Client Attestation Proof of Possession (PoP) for the Client Instance Key. Lastly, the client sends both the Client Attestation JWT and the Client Attestation PoP with the Token Request to the Authorization Server. The Authorization Server will validate the client attestation and thus authenticates the client. The Authorization Server may continue to issue sender-constrained access tokens using {{oauth-dpop-16}}.\r\n```\r\n\r\nwhat is `(platform specific) attestation` ?\r\nplease be consistent, capitalize `Client` everywhere or not capitalize it.\r\nthe explanation is pretty long. I would suggest to put a short summary before the diagram but break down this paragraph into the steps and put them under the diagram.",
+              "createdAt": "2023-05-30T19:18:46Z",
+              "updatedAt": "2023-05-30T19:18:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5Whpcu",
+          "commit": {
+            "abbreviatedOid": "bc84403"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-30T19:20:07Z",
+          "updatedAt": "2023-05-30T19:20:07Z",
+          "comments": [
+            {
+              "originalPosition": 77,
+              "body": "```suggestion\r\n   A cryptographic, asymmetric key generated by the client instance and proven to the client backend. The public key is contained in the Client Attestation JWT and is used to sign the Client Attestation Proof of Possession.\r\n```",
+              "createdAt": "2023-05-30T19:20:07Z",
+              "updatedAt": "2023-05-30T19:20:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5WhrvT",
+          "commit": {
+            "abbreviatedOid": "bc84403"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-30T19:24:48Z",
+          "updatedAt": "2023-05-30T19:24:49Z",
+          "comments": [
+            {
+              "originalPosition": 84,
+              "body": "I perceive this draft as a PoP version of `urn:ietf:params:oauth:grant-type:jwt-bearer`, would it make sense to make that more intuitive and explicit - like `urn:ietf:params:oauth:grant-type:jwt-pop`?",
+              "createdAt": "2023-05-30T19:24:48Z",
+              "updatedAt": "2023-05-30T19:24:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5Whr_p",
+          "commit": {
+            "abbreviatedOid": "bc84403"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-30T19:25:31Z",
+          "updatedAt": "2023-05-30T19:25:31Z",
+          "comments": [
+            {
+              "originalPosition": 123,
+              "body": "```suggestion\r\nThe following rules apply to validating the Client Attestation JWT. Application of additional restrictions and policy are at the discretion of the Authorization Server.\r\n```\r\nClient Attestation JWT or Client Attestation PoP JWT?\r\nalso capitalization - please be consistent...",
+              "createdAt": "2023-05-30T19:25:31Z",
+              "updatedAt": "2023-05-30T19:25:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5WhuCq",
+          "commit": {
+            "abbreviatedOid": "bc84403"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "a new paragraph in intro sectionis great but hard to follow, suggest to break it down into steps and put under the diagram.\r\n\r\nI also perceive this draft as a PoP version of urn:ietf:params:oauth:grant-type:jwt-bearer, would it make sense to make that more intuitive and explicit - like urn:ietf:params:oauth:grant-type:jwt-pop? - this can be another issue",
+          "createdAt": "2023-05-30T19:30:39Z",
+          "updatedAt": "2023-05-30T19:30:39Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5WiY_v",
+          "commit": {
+            "abbreviatedOid": "bc84403"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-30T21:35:53Z",
+          "updatedAt": "2023-05-30T21:35:53Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Just noting that given we now have OAuth 2.1 saying this is for OAuth 2.0 might give the wrong compatibility impression?",
+              "createdAt": "2023-05-30T21:35:53Z",
+              "updatedAt": "2023-05-30T21:35:53Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5WiZdE",
+          "commit": {
+            "abbreviatedOid": "bc84403"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-30T21:37:44Z",
+          "updatedAt": "2023-05-30T21:37:45Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "```suggestion\r\n{{RFC7521}} defines a way for a client to include an assertion in a token request to an authorization server for the purposes of client authentication. This specification uses this framework to define a new assertion type that provides a way for a client instance to authenticate itself with the authorization server through an assertion that is bound to a public key (for proof of possession). This assertion is designated with the name of Client Attestation in this draft.\r\n```",
+              "createdAt": "2023-05-30T21:37:45Z",
+              "updatedAt": "2023-05-30T21:37:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5WiZhJ",
+          "commit": {
+            "abbreviatedOid": "bc84403"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-30T21:37:56Z",
+          "updatedAt": "2023-05-30T21:37:57Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "@tlodderstedt originally made this change",
+              "createdAt": "2023-05-30T21:37:56Z",
+              "updatedAt": "2023-05-30T21:37:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5WiZxZ",
+          "commit": {
+            "abbreviatedOid": "bc84403"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-30T21:38:57Z",
+          "updatedAt": "2023-05-30T21:38:58Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "Kind of conflicts with @Sakurann review, we don't extend the assertion we extend the framework or mechanism defined by RFC 7521.",
+              "createdAt": "2023-05-30T21:38:57Z",
+              "updatedAt": "2023-05-30T21:38:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5WiaUS",
+          "commit": {
+            "abbreviatedOid": "bc84403"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-30T21:41:08Z",
+          "updatedAt": "2023-05-30T21:41:08Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "Communication of this requirement may be communicated via metadata I dont think that is the only way though and would prefer we dont imply this. I'd also prefer we dont talk much about how the attestation is obtained by the client instance, much of this paragraph to me is informational and might set the wrong tone for the draft in terms of prescribing a solution.",
+              "createdAt": "2023-05-30T21:41:08Z",
+              "updatedAt": "2023-05-30T21:41:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5Wiaxg",
+          "commit": {
+            "abbreviatedOid": "bc84403"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-30T21:42:58Z",
+          "updatedAt": "2023-05-30T21:42:58Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "Client Attestation JWT is from the terminology, so I capitalize it, other occurences are not in the Terminology (yet), so therefore not capitalized, that should be consistent for now",
+              "createdAt": "2023-05-30T21:42:58Z",
+              "updatedAt": "2023-05-30T21:42:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5WibEh",
+          "commit": {
+            "abbreviatedOid": "bc84403"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-30T21:44:12Z",
+          "updatedAt": "2023-05-30T21:44:13Z",
+          "comments": [
+            {
+              "originalPosition": 54,
+              "body": "Still prefer the previous language to be honest, data exchanged is a part of the protocol IMO and its one protocol not multiple hence protocol instead of protocols. The diagram also already describes what is happening so the \"request and sending a client attestation JWT\" feels redundant.  ",
+              "createdAt": "2023-05-30T21:44:13Z",
+              "updatedAt": "2023-05-30T21:44:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5Wibc-",
+          "commit": {
+            "abbreviatedOid": "bc84403"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-30T21:45:41Z",
+          "updatedAt": "2023-05-30T21:45:42Z",
+          "comments": [
+            {
+              "originalPosition": 84,
+              "body": "Im not against this but I think it makes it less clear how it relates to the terminology we have established in the draft e.g this means the type would be ^ but the name of is client attestation?",
+              "createdAt": "2023-05-30T21:45:41Z",
+              "updatedAt": "2023-05-30T21:45:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5WjLPB",
+          "commit": {
+            "abbreviatedOid": "bc84403"
+          },
+          "author": "tlodderstedt",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-31T01:19:24Z",
+          "updatedAt": "2023-05-31T01:19:25Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "we don't have OAuth 2.1 yet, it's a draft. But I would be fine with just \"OAuth\" (with the existing reference to RFC 6749",
+              "createdAt": "2023-05-31T01:19:25Z",
+              "updatedAt": "2023-05-31T01:19:25Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "id": "PR_kwDOJaEkaM5RtQi2",
+      "title": "adding myself as author",
+      "url": "https://github.com/vcstuff/draft-looker-oauth-attested-key-based-client-authentication/pull/16",
+      "state": "MERGED",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-05-30T17:12:40Z",
+      "updatedAt": "2023-05-30T19:07:33Z",
+      "baseRepository": "vcstuff/draft-looker-oauth-attested-key-based-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "071f2a30565a4428394ab157325fffd212a47277",
+      "headRepository": "paulbastian/draft-looker-oauth-attested-key-based-client-authentication",
+      "headRefName": "editor",
+      "headRefOid": "6461cabfe5388ffb6f8de6c9d8ae956ce6c8cc5b",
+      "closedAt": "2023-05-30T19:07:33Z",
+      "mergedAt": "2023-05-30T19:07:33Z",
+      "mergedBy": "tplooker",
+      "mergeCommit": {
+        "oid": "3006a80ffa8a5375a1d0fc277a93432b29c3409d"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJaEkaM5Whktc",
+          "commit": {
+            "abbreviatedOid": "6461cab"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-05-30T19:07:27Z",
+          "updatedAt": "2023-05-30T19:07:27Z",
+          "comments": []
         }
       ]
     }
