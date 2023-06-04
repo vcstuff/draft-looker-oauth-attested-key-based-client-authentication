@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-01T01:08:54.129330+00:00",
+  "timestamp": "2023-06-04T01:05:12.075040+00:00",
   "repo": "vcstuff/draft-looker-oauth-attested-key-based-client-authentication",
   "labels": [
     {
@@ -718,13 +718,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-05-22T16:08:04Z",
-      "updatedAt": "2023-05-31T01:19:25Z",
+      "updatedAt": "2023-06-01T11:56:00Z",
       "baseRepository": "vcstuff/draft-looker-oauth-attested-key-based-client-authentication",
       "baseRefName": "main",
       "baseRefOid": "071f2a30565a4428394ab157325fffd212a47277",
       "headRepository": "paulbastian/draft-looker-oauth-attested-key-based-client-authentication",
       "headRefName": "main",
-      "headRefOid": "bc8440356100604e9e5451c704577dc5a779a082",
+      "headRefOid": "4a02ff8c63c9336cae4da05303b1cf07c370f065",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -1272,6 +1272,26 @@
               "body": "we don't have OAuth 2.1 yet, it's a draft. But I would be fine with just \"OAuth\" (with the existing reference to RFC 6749",
               "createdAt": "2023-05-31T01:19:25Z",
               "updatedAt": "2023-05-31T01:19:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5WvdSt",
+          "commit": {
+            "abbreviatedOid": "bc84403"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-01T11:53:46Z",
+          "updatedAt": "2023-06-01T11:53:46Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "I agree with @tplooker and like the emphasis on client instance",
+              "createdAt": "2023-06-01T11:53:46Z",
+              "updatedAt": "2023-06-01T11:53:46Z"
             }
           ]
         }
