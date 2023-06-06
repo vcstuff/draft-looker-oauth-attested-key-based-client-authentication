@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-04T01:05:12.075040+00:00",
+  "timestamp": "2023-06-06T00:59:02.816834+00:00",
   "repo": "vcstuff/draft-looker-oauth-attested-key-based-client-authentication",
   "labels": [
     {
@@ -121,7 +121,7 @@
       "labels": [],
       "body": "The text currently says:\r\n> The JWT MUST contain a \"sub\" (subject) claim with a value corresponding to the \"client_id\" of the OAuth client.\r\n\r\nthe thing is.. when there could been no pre-existing relationship between the issuer and the wallet. probably worth noting that `sub` (and `client_id` value) can be self-attested by the wallet frontend",
       "createdAt": "2023-05-13T16:58:41Z",
-      "updatedAt": "2023-05-19T00:43:33Z",
+      "updatedAt": "2023-06-05T16:12:37Z",
       "closedAt": null,
       "comments": [
         {
@@ -203,7 +203,7 @@
         },
         {
           "author": "paulbastian",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "I agree the most common use case is the iss being the client backend but we should not limit ourselves here.\nI propose iss is the attestation service and sub is a common name for the client aka wallet solution.\nIn some cases both might be the same but they don't need to be.\nBoth identifiers might be relevant for a lookup in a trust list ",
           "createdAt": "2023-05-18T11:08:02Z",
           "updatedAt": "2023-05-18T11:08:02Z"
@@ -249,6 +249,48 @@
           "body": "Something that was also pointed out to me is that RFC7523 may not require the iss to be the client_id but OpenID's profiling of it [did](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication) and from what I understand there was no particular reason for RFC7523 to not constrain the iss value in this way, it just didn't. Nor are there really any deployments that have used RFC7523 in a way where the iss value is not the client id. ",
           "createdAt": "2023-05-19T00:43:33Z",
           "updatedAt": "2023-05-19T00:43:33Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "NONE",
+          "body": "here I share something that emerged during the implementations and comparisons that took place with other analysts\r\n\r\niss and sub should not contain the same value, since the wallet provider (iss) is a separate entity with respect to the wallet instance (sub)\r\n\r\nFor this reason iss and sub must contain different identifiers, being related to distinct entities.\r\n\r\nThere are some cases where the client should not have a unique identifier, in this case the sub claim should not be included in the claim, because having iss and sub with identical values \u200b\u200bwould not make sense.\r\n\r\nFor this reason I propose to make the sub claim OPTIONAL rather than REQUIRED (MUST).",
+          "createdAt": "2023-06-05T08:30:49Z",
+          "updatedAt": "2023-06-05T08:30:49Z"
+        },
+        {
+          "author": "tlodderstedt",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> iss and sub should not contain the same value, since the wallet provider (iss) is a separate entity with respect to the wallet instance (sub)\r\n\r\nWhy is that and what did emerge during implementations?",
+          "createdAt": "2023-06-05T08:33:36Z",
+          "updatedAt": "2023-06-05T08:33:36Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I think the discussion goes somewhere else now.\n\nOriginally the question was whether the attesting entity must be the client backend or can be a trusted third party.",
+          "createdAt": "2023-06-05T11:07:53Z",
+          "updatedAt": "2023-06-05T11:07:53Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "NONE",
+          "body": "> Why is that and what did emerge during implementations?\r\n\r\nexactly was I wrote in the thread\r\n\r\n\r\n",
+          "createdAt": "2023-06-05T12:25:14Z",
+          "updatedAt": "2023-06-05T12:25:14Z"
+        },
+        {
+          "author": "tlodderstedt",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I guess you mean \"iss and sub should not contain the same value, since the wallet provider (iss) is a separate entity with respect to the wallet instance (sub)\"\r\n\r\nWhile I agree on a conceptual level, I don't follow your conclusion that that an attestation needs to have different values for iss and sub. From the issuer's standpoint it is important to know it is talking to an instance of the respective wallet provider/product. It does not need to have an identity/identifier, nevertheless. You seem to agree as you propose to make the sub optional. Why do you think this is the better option than using sub == iss (i.e. self asserted, which to me makes sense). ",
+          "createdAt": "2023-06-05T14:14:14Z",
+          "updatedAt": "2023-06-05T14:14:34Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "NONE",
+          "body": "I got your point.\r\n\r\nI don't think that iss == sub because the wallet provider attests this to the wallet instance as a personal mobile device.\r\nThere might be some cases where the wallet instance is provided as a cloud service, thus this would be a specialized case compatible to your vision.\r\n\r\nIn the cases where the wallet instance is a personal device, the Wallet Instance Attestation is not self-asserted since Provider and Instance are actually different entities. The issuer attests information in possession and control of the instance, that's a distinct entity under the sole control of the user.\r\n\r\nIf the attestation is self asserted the private key should be in control of the wallet provider, while this is not the case where personal device are involved.\r\n\r\nthe wallet provider doesn't have any control on the private keys and general details of the wallet instance, since these are arbitraries\r\n\r\n",
+          "createdAt": "2023-06-05T16:10:57Z",
+          "updatedAt": "2023-06-05T16:12:37Z"
         }
       ]
     },
@@ -264,7 +306,7 @@
       "labels": [],
       "body": "I'm struggling with the terminology currently used in this draft. For me, it describes a mechanism to use JWTs to authenticate OAuth clients. \r\n\r\nHowever, the draft currently designates those JWTs as \"Key Attestation\" or \"attestation key\" or \"jwt-key-attestation\", which sounds like the focus is on attesting something about a certain key to the AS. But that's obviously not the case since, this draft is about client authentication and the key is \"just\" used to protect the JWT against replay. \r\n\r\nI think the name is confusing and suggest to change it to \"Client Attestation\". ",
       "createdAt": "2023-05-16T13:45:01Z",
-      "updatedAt": "2023-05-31T01:21:47Z",
+      "updatedAt": "2023-06-05T14:08:44Z",
       "closedAt": null,
       "comments": [
         {
@@ -308,6 +350,20 @@
           "body": "What is the meaning of this title? What does \"Attestation based\" mean?",
           "createdAt": "2023-05-31T01:21:47Z",
           "updatedAt": "2023-05-31T01:21:47Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "that the Client backend/Attestation Service attests the Client Instance",
+          "createdAt": "2023-06-05T13:24:21Z",
+          "updatedAt": "2023-06-05T13:24:21Z"
+        },
+        {
+          "author": "tlodderstedt",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "How is that different from \"JWT-based client authentication\"? The JWT also contains claims about the client.",
+          "createdAt": "2023-06-05T14:08:44Z",
+          "updatedAt": "2023-06-05T14:08:44Z"
         }
       ]
     },
@@ -512,6 +568,22 @@
           "updatedAt": "2023-05-30T15:18:52Z"
         }
       ]
+    },
+    {
+      "number": 17,
+      "id": "I_kwDOJaEkaM5nyl4B",
+      "title": "Reanme Grant Type to JWT-PoP?",
+      "url": "https://github.com/vcstuff/draft-looker-oauth-attested-key-based-client-authentication/issues/17",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Issue raised by Kristina:\r\nI also perceive this draft as a PoP version of urn:ietf:params:oauth:grant-type:jwt-bearer, would it make sense to make that more intuitive and explicit - like urn:ietf:params:oauth:grant-type:jwt-pop? - this can be another issue\r\n\r\n_Originally posted by @Sakurann in https://github.com/vcstuff/draft-looker-oauth-attested-key-based-client-authentication/pull/11#pullrequestreview-1451679914_\r\n            ",
+      "createdAt": "2023-06-05T08:59:41Z",
+      "updatedAt": "2023-06-05T08:59:41Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -718,13 +790,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-05-22T16:08:04Z",
-      "updatedAt": "2023-06-01T11:56:00Z",
+      "updatedAt": "2023-06-05T14:11:23Z",
       "baseRepository": "vcstuff/draft-looker-oauth-attested-key-based-client-authentication",
       "baseRefName": "main",
       "baseRefOid": "071f2a30565a4428394ab157325fffd212a47277",
       "headRepository": "paulbastian/draft-looker-oauth-attested-key-based-client-authentication",
       "headRefName": "main",
-      "headRefOid": "4a02ff8c63c9336cae4da05303b1cf07c370f065",
+      "headRefOid": "36bf2bfe7ac601171b268693565ef32e0c031530",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -736,6 +808,20 @@
           "body": "Please change file/draft name and title, too. ",
           "createdAt": "2023-05-23T07:33:18Z",
           "updatedAt": "2023-05-23T07:43:03Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> \r\n> I also perceive this draft as a PoP version of urn:ietf:params:oauth:grant-type:jwt-bearer, would it make sense to make that more intuitive and explicit - like urn:ietf:params:oauth:grant-type:jwt-pop? - this can be another issue\r\n\r\nOpened as a separate issue.",
+          "createdAt": "2023-06-05T09:04:28Z",
+          "updatedAt": "2023-06-05T09:04:28Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> a new paragraph in intro sectionis great but hard to follow, suggest to break it down into steps and put under the diagram.\r\n\r\n@Sakurann please check my latest suggestion\r\n",
+          "createdAt": "2023-06-05T09:32:55Z",
+          "updatedAt": "2023-06-05T09:32:55Z"
         }
       ],
       "reviews": [
@@ -1294,6 +1380,189 @@
               "updatedAt": "2023-06-01T11:53:46Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5XJS5l",
+          "commit": {
+            "abbreviatedOid": "1d893d1"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-05T08:55:36Z",
+          "updatedAt": "2023-06-05T08:55:37Z",
+          "comments": [
+            {
+              "originalPosition": 84,
+              "body": "I agree with @tplooker , as that could lead to confusion. But no hard feelings here",
+              "createdAt": "2023-06-05T08:55:36Z",
+              "updatedAt": "2023-06-05T08:55:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5XKsZi",
+          "commit": {
+            "abbreviatedOid": "6ac2b5c"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "NONE",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2023-06-05T12:28:16Z",
+          "updatedAt": "2023-06-05T12:35:57Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "does the status of \"public clients\" be applied also in this case?\r\n\r\nI've the perception that in our use cases whatever are the statuses of the clients is not relevant to this draft",
+              "createdAt": "2023-06-05T12:28:16Z",
+              "updatedAt": "2023-06-05T12:35:57Z"
+            },
+            {
+              "originalPosition": 53,
+              "body": "I'd write using present, removing \"will\"\r\n\r\nWDYT about\r\n\r\n`The flow starts with the AS communicating its requirements for the client authentication to the client, made available in its metadata.`\r\n\r\nHaving said \"the AS\" that would be the same for the Client as well, thus\r\n\r\n`The Client instance makes available its Client Attestation JWS to the AS where an access token is requested`",
+              "createdAt": "2023-06-05T12:33:18Z",
+              "updatedAt": "2023-06-05T12:35:57Z"
+            },
+            {
+              "originalPosition": 56,
+              "body": "I'd not use the future, I think that would be better talking in the present",
+              "createdAt": "2023-06-05T12:34:03Z",
+              "updatedAt": "2023-06-05T12:35:57Z"
+            },
+            {
+              "originalPosition": 56,
+              "body": "`client instance` -> `Client instance`",
+              "createdAt": "2023-06-05T12:34:32Z",
+              "updatedAt": "2023-06-05T12:35:57Z"
+            },
+            {
+              "originalPosition": 56,
+              "body": "is client backend a defined term? If yes, we should uppercase it accordingly",
+              "createdAt": "2023-06-05T12:35:10Z",
+              "updatedAt": "2023-06-05T12:35:57Z"
+            },
+            {
+              "originalPosition": 60,
+              "body": "will validate -> valitades",
+              "createdAt": "2023-06-05T12:35:32Z",
+              "updatedAt": "2023-06-05T12:35:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5XK2G8",
+          "commit": {
+            "abbreviatedOid": "6ac2b5c"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-05T12:48:39Z",
+          "updatedAt": "2023-06-05T12:48:40Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "the clients being authenticated by the approach of this RFC, are to be considered public clients in OAuth speak. Doesn't it make sense to say so?",
+              "createdAt": "2023-06-05T12:48:39Z",
+              "updatedAt": "2023-06-05T12:48:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5XK68l",
+          "commit": {
+            "abbreviatedOid": "6ac2b5c"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-05T12:56:53Z",
+          "updatedAt": "2023-06-05T12:56:54Z",
+          "comments": [
+            {
+              "originalPosition": 56,
+              "body": "I will capitalize things later once they have an entry in the terminology",
+              "createdAt": "2023-06-05T12:56:53Z",
+              "updatedAt": "2023-06-05T12:56:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5XK8Ea",
+          "commit": {
+            "abbreviatedOid": "6ac2b5c"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-05T12:59:19Z",
+          "updatedAt": "2023-06-05T12:59:19Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I'm ok with public client since wallet instances are mobile devices, I was just asking since I read in the specs also the role of client backend without knowing which would be their client registration mechanisms",
+              "createdAt": "2023-06-05T12:59:19Z",
+              "updatedAt": "2023-06-05T12:59:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5XLDS9",
+          "commit": {
+            "abbreviatedOid": "6ac2b5c"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-05T13:14:55Z",
+          "updatedAt": "2023-06-05T13:14:56Z",
+          "comments": [
+            {
+              "originalPosition": 53,
+              "body": "changed all introduction text to present",
+              "createdAt": "2023-06-05T13:14:55Z",
+              "updatedAt": "2023-06-05T13:14:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5XLjSU",
+          "commit": {
+            "abbreviatedOid": "36bf2bf"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-05T14:11:19Z",
+          "updatedAt": "2023-06-05T14:11:19Z",
+          "comments": [
+            {
+              "originalPosition": 83,
+              "body": "I approve this PR with this in mind\r\n\r\nClient Instance, as represented in the Figure 1, should be a defined term as well",
+              "createdAt": "2023-06-05T14:11:19Z",
+              "updatedAt": "2023-06-05T14:11:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5XLjUZ",
+          "commit": {
+            "abbreviatedOid": "36bf2bf"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-05T14:11:23Z",
+          "updatedAt": "2023-06-05T14:11:23Z",
+          "comments": []
         }
       ]
     },
