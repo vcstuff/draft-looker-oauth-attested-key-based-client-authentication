@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-08T00:57:55.185023+00:00",
+  "timestamp": "2023-06-15T00:55:49.341369+00:00",
   "repo": "vcstuff/draft-looker-oauth-attested-key-based-client-authentication",
   "labels": [
     {
@@ -584,6 +584,22 @@
       "updatedAt": "2023-06-05T08:59:41Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 18,
+      "id": "I_kwDOJaEkaM5oo1Wx",
+      "title": "client_assertion_type",
+      "url": "https://github.com/vcstuff/draft-looker-oauth-attested-key-based-client-authentication/issues/18",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "              I perceive this draft as a PoP version of `urn:ietf:params:oauth:grant-type:jwt-bearer`, would it make sense to make that more intuitive and explicit - like `urn:ietf:params:oauth:grant-type:jwt-pop`?\r\n\r\n_Originally posted by @Sakurann in https://github.com/vcstuff/draft-looker-oauth-attested-key-based-client-authentication/pull/11#discussion_r1210728395_\r\n            ",
+      "createdAt": "2023-06-13T19:34:04Z",
+      "updatedAt": "2023-06-13T19:34:04Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -783,24 +799,26 @@
       "id": "PR_kwDOJaEkaM5RCLU9",
       "title": "Introduction Text + Renaming Client Key Attestation to Client Attestation",
       "url": "https://github.com/vcstuff/draft-looker-oauth-attested-key-based-client-authentication/pull/11",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "paulbastian",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2023-05-22T16:08:04Z",
-      "updatedAt": "2023-06-06T20:45:54Z",
+      "updatedAt": "2023-06-13T19:46:10Z",
       "baseRepository": "vcstuff/draft-looker-oauth-attested-key-based-client-authentication",
       "baseRefName": "main",
       "baseRefOid": "071f2a30565a4428394ab157325fffd212a47277",
       "headRepository": "paulbastian/draft-looker-oauth-attested-key-based-client-authentication",
       "headRefName": "main",
-      "headRefOid": "36bf2bfe7ac601171b268693565ef32e0c031530",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "8825f3f2ea5483d053892c8da6b23e5c3ad8acec",
+      "closedAt": "2023-06-13T19:46:10Z",
+      "mergedAt": "2023-06-13T19:46:10Z",
+      "mergedBy": "tplooker",
+      "mergeCommit": {
+        "oid": "0d942cf0688ed99afccfb16c850bb5ff7b62bfc3"
+      },
       "comments": [
         {
           "author": "tlodderstedt",
@@ -1663,6 +1681,19 @@
               "updatedAt": "2023-06-06T20:45:54Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5YF6J7",
+          "commit": {
+            "abbreviatedOid": "8825f3f"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "I would like to see the description under the sequence diagram improved, but if you want to address that in another PR, that is fine too.",
+          "createdAt": "2023-06-13T19:45:05Z",
+          "updatedAt": "2023-06-13T19:45:05Z",
+          "comments": []
         }
       ]
     },
@@ -1707,6 +1738,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 19,
+      "id": "PR_kwDOJaEkaM5S7FXz",
+      "title": "Simplifies introduction",
+      "url": "https://github.com/vcstuff/draft-looker-oauth-attested-key-based-client-authentication/pull/19",
+      "state": "OPEN",
+      "author": "tplooker",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Re-simplifies the introduction ",
+      "createdAt": "2023-06-13T19:52:21Z",
+      "updatedAt": "2023-06-13T19:52:21Z",
+      "baseRepository": "vcstuff/draft-looker-oauth-attested-key-based-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "0d942cf0688ed99afccfb16c850bb5ff7b62bfc3",
+      "headRepository": "vcstuff/draft-looker-oauth-attested-key-based-client-authentication",
+      "headRefName": "tl/simplify-intro",
+      "headRefOid": "2ff3c8cd02361c4d7471a873635da3c78419d4bd",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
