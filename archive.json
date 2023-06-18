@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-15T00:55:49.341369+00:00",
+  "timestamp": "2023-06-18T01:02:28.726093+00:00",
   "repo": "vcstuff/draft-looker-oauth-attested-key-based-client-authentication",
   "labels": [
     {
@@ -557,15 +557,22 @@
       "labels": [],
       "body": "Since the EUDI Wallet instance may have different level of security depending on its own hardware and/or software capabilities, here the proposal: define a claim name for exposing different level of security of the wallet instance.\r\n\r\nExample:\"gold\", \"silver\" and \"bronze\" or \"high\", \"medium\", \"low\" depending on the framework used. \r\n\r\nThis proposal enables the security evaluation to the credential issuing side (or any other Relying Party) without knowing any specific hardware or software features (e.g. OS, etc.). ",
       "createdAt": "2023-05-30T13:52:15Z",
-      "updatedAt": "2023-05-30T15:18:52Z",
+      "updatedAt": "2023-06-17T12:47:50Z",
       "closedAt": null,
       "comments": [
         {
           "author": "paulbastian",
-          "authorAssociation": "CONTRIBUTOR",
+          "authorAssociation": "COLLABORATOR",
           "body": "The RFC may be used to issue wallet attestations in the eIDAS use case, giving additional information on the key type of the `cnf` and the user authenticaiton mechanisms, see more info [here](https://www.linkedin.com/feed/update/urn:li:activity:7056179875635724289/). A Wallet alone does not achieve a LoA but only supports the issuer in achieving an LoA for the lifecycle of an issues credential. However, a claim `supported_LoA` could be useable",
           "createdAt": "2023-05-30T15:18:52Z",
           "updatedAt": "2023-05-30T15:18:52Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "NONE",
+          "body": "Here the proposal raised in the italian implementation\r\n\r\n`asc_values_supported` and `asc`\r\n\r\nwhere ASC is the acronym of Attested Security Context\r\n\r\nthis aims do disambiguate the meaning of LoA, that is referred to person identities, to the scope of this attestation, that's entirely related to the security context of a personal device \r\n\r\n#### asc_values_supported\r\n\r\nis a capability of the wallet provider, that defines which kind of checks/levels is able to attests to its wallet instances\r\n\r\n#### asc \r\n\r\nis the claim issued in the Wallet Instance Attestation",
+          "createdAt": "2023-06-17T12:46:20Z",
+          "updatedAt": "2023-06-17T12:47:50Z"
         }
       ]
     },
