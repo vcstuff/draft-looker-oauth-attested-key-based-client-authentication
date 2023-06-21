@@ -5,12 +5,12 @@
 Web Authorization Protocol                                     T. Looker
 Internet-Draft                                                     MATTR
 Intended status: Informational                                P. Bastian
-Expires: 15 December 2023                           Bundesdruckerei GmbH
-                                                            13 June 2023
+Expires: 23 December 2023                           Bundesdruckerei GmbH
+                                                            21 June 2023
 
 
-            OAuth2 Attested Key Based Client Authentication
-   draft-looker-oauth-attested-key-based-client-authentication-latest
+             OAuth2 Attestation Based Client Authentication
+   draft-looker-oauth-attestation-based-client-authentication-latest
 
 Abstract
 
@@ -25,7 +25,7 @@ About This Document
    This note is to be removed before publishing as an RFC.
 
    Status information for this document may be found at
-   https://datatracker.ietf.org/doc/draft-looker-oauth-attested-key-
+   https://datatracker.ietf.org/doc/draft-looker-oauth-attestation-
    based-client-authentication/.
 
 Status of This Memo
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 15 December 2023.
+   This Internet-Draft will expire on 23 December 2023.
 
 Copyright Notice
 
