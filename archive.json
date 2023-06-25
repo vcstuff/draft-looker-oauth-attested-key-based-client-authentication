@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-22T00:57:31.943877+00:00",
+  "timestamp": "2023-06-25T01:08:56.896465+00:00",
   "repo": "vcstuff/draft-looker-oauth-attestation-based-client-authentication",
   "labels": [
     {
@@ -1829,6 +1829,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 22,
+      "id": "PR_kwDOJaEkaM5TscnY",
+      "title": "fix: small typos in the diagram",
+      "url": "https://github.com/vcstuff/draft-looker-oauth-attestation-based-client-authentication/pull/22",
+      "state": "OPEN",
+      "author": "peppelinux",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "<!-- If this pull request closes an issue, please mention the issue number below -->\r\nCloses # <!-- Issue # here -->\r\n\r\n## \ud83d\udcd1 Description\r\n<!-- Add a brief description of the pr -->\r\n\r\n<!-- You can also choose to add a list of changes and if they have been completed or not by using the markdown to-do list syntax\r\n- [ ] Not Completed\r\n- [x] Completed\r\n-->\r\n\r\n## Preview Link\r\n\r\n<!-- Update the link below to provide reviewers with a convenient link to view a rendered version of the PR-->\r\n<!-- In general the link should be of the form https://github.com/<repo-name>/<branch-name>/<draft-name>.html-->\r\n\r\n[click here for rendered preview of PR](https://github.com/<repo-name>/<branch-name>/<draft-name>.html)",
+      "createdAt": "2023-06-22T21:06:40Z",
+      "updatedAt": "2023-06-22T21:06:40Z",
+      "baseRepository": "vcstuff/draft-looker-oauth-attestation-based-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "4e37428fbe7d51eca28fb8f78b0670460281b321",
+      "headRepository": "peppelinux/draft-looker-oauth-attestation-based-client-authentication",
+      "headRefName": "patch-1",
+      "headRefOid": "e7d8b3dc2cc3a791280f2e84792dff07a6868a7a",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
