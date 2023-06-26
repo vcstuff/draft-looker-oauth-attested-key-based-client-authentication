@@ -5,8 +5,8 @@
 Web Authorization Protocol                                     T. Looker
 Internet-Draft                                                     MATTR
 Intended status: Informational                                P. Bastian
-Expires: 23 December 2023                           Bundesdruckerei GmbH
-                                                            21 June 2023
+Expires: 28 December 2023                           Bundesdruckerei GmbH
+                                                            26 June 2023
 
 
              OAuth2 Attestation Based Client Authentication
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 December 2023.
+   This Internet-Draft will expire on 28 December 2023.
 
 Copyright Notice
 
@@ -114,8 +114,8 @@ Table of Contents
                               +---------------+
                                  / \      |
                                   |       |
-                (2) Request       |       |     (4) Repond with
-                Client            |       |     Generated Client
+                (2) Request       |       |     (4) Respond with
+                Client            |       |     generated Client
                 Attestation       |       |     Attestation
                 for generated     |       |
                 key               |       |
