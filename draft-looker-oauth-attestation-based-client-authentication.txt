@@ -5,20 +5,21 @@
 Web Authorization Protocol                                     T. Looker
 Internet-Draft                                                     MATTR
 Intended status: Informational                                P. Bastian
-Expires: 28 December 2023                           Bundesdruckerei GmbH
-                                                            26 June 2023
+Expires: 29 December 2023                           Bundesdruckerei GmbH
+                                                            27 June 2023
 
 
-             OAuth2 Attestation Based Client Authentication
+           OAuth 2.0 Attestation Based Client Authentication
    draft-looker-oauth-attestation-based-client-authentication-latest
 
 Abstract
 
    This specification defines a new method of client authentication for
-   OAuth [RFC6749] by extending the approach defined in [RFC7521].  This
-   new method enables client deployments that are traditionally viewed
-   as public clients to be able to authenticate with the authorization
-   server through an attestation based authentication scheme.
+   OAuth 2.0 [RFC6749] by extending the approach defined in [RFC7521].
+   This new method enables client deployments that are traditionally
+   viewed as public clients to be able to authenticate with the
+   authorization server through an attestation based authentication
+   scheme.
 
 About This Document
 
@@ -43,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 December 2023.
+   This Internet-Draft will expire on 29 December 2023.
 
 Copyright Notice
 
@@ -216,7 +217,7 @@ Table of Contents
    access token request (with extra line breaks for display purposes
    only):
 
-POST /token.oauth2 HTTP/1.1
+POST /token HTTP/1.1
 Host: as.example.com
 Content-Type: application/x-www-form-urlencoded
 
