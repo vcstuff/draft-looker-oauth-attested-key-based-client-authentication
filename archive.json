@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-07-06T01:07:22.917190+00:00",
+  "timestamp": "2023-07-09T01:07:37.621811+00:00",
   "repo": "vcstuff/draft-looker-oauth-attestation-based-client-authentication",
   "labels": [
     {
@@ -525,7 +525,7 @@
       "labels": [],
       "body": "In the example in section 3.1.1. the issuer and the sub parameters should not be the same since the Wallet provider and the wallet instance are distinct entities. The private key in sole control of the wallet instance is referenced in the attestation while the subject refers to the Wallet Provider. \r\n\r\nMoreover, is the given example meant to be normative? I'm asking since in the example we find the JWS header parameter kid without any explanatory text about the key resolution mechanism allowed in the specs. (x5c, trust_chain, jwk)\r\n\r\n",
       "createdAt": "2023-05-30T13:22:00Z",
-      "updatedAt": "2023-07-05T23:36:44Z",
+      "updatedAt": "2023-07-06T09:22:14Z",
       "closedAt": null,
       "comments": [
         {
@@ -541,6 +541,20 @@
           "body": "regarding the value of the sub claim in the WAI: since the wallet instance attestation is binded to a public key, we are not forced to use a unique and immutable subject identifier but instead a unique identifier with the same lifetime of the related key. That's why I suggest to place the jwk thumbprint value as sub or any other collision resistant value\r\n\r\nanyway I think that's an implementation choice if not of interest in this specs, I'd ask to remove any constraint to have iss equal to sub, since doesn't make any sense following the awareness that the wallet provider and the wallet instance are distinct entities, even if part of the same wallet solution, then they should not use the same entity identifier\r\n\r\n",
           "createdAt": "2023-07-05T23:36:44Z",
           "updatedAt": "2023-07-05T23:36:44Z"
+        },
+        {
+          "author": "tlodderstedt",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I don't see any constraints in the spec regarding the `sub` value. Please point our if I missed one. ",
+          "createdAt": "2023-07-06T06:56:05Z",
+          "updatedAt": "2023-07-06T06:56:05Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I had a check, now I can confirm.\r\nHappy to have put a stone with you on that\r\n",
+          "createdAt": "2023-07-06T09:22:14Z",
+          "updatedAt": "2023-07-06T09:22:14Z"
         }
       ]
     },
@@ -551,14 +565,22 @@
       "url": "https://github.com/vcstuff/draft-looker-oauth-attestation-based-client-authentication/issues/14",
       "state": "OPEN",
       "author": "peppelinux",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Is there any considerations about adopting *The Entity Attestation Token (EAT)* [draft-ietf-rats-eat-12](https://datatracker.ietf.org/doc/draft-ietf-rats-eat/12/) for the Attestation JWT?",
       "createdAt": "2023-05-30T13:31:55Z",
-      "updatedAt": "2023-05-30T13:31:55Z",
+      "updatedAt": "2023-07-06T19:05:11Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "Sakurann",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I think it is sufficient to add that JWT Claims defined in EAT draft can be put in the attestation JWT?",
+          "createdAt": "2023-07-06T19:05:10Z",
+          "updatedAt": "2023-07-06T19:05:10Z"
+        }
+      ]
     },
     {
       "number": 15,
@@ -619,25 +641,69 @@
       "labels": [],
       "body": "              I perceive this draft as a PoP version of `urn:ietf:params:oauth:grant-type:jwt-bearer`, would it make sense to make that more intuitive and explicit - like `urn:ietf:params:oauth:grant-type:jwt-pop`?\r\n\r\n_Originally posted by @Sakurann in https://github.com/vcstuff/draft-looker-oauth-attested-key-based-client-authentication/pull/11#discussion_r1210728395_\r\n            ",
       "createdAt": "2023-06-13T19:34:04Z",
-      "updatedAt": "2023-06-13T19:34:04Z",
+      "updatedAt": "2023-07-06T19:02:12Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "Sakurann",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "is this duplicate of #17 ?",
+          "createdAt": "2023-07-06T19:02:12Z",
+          "updatedAt": "2023-07-06T19:02:12Z"
+        }
+      ]
     },
     {
       "number": 20,
       "id": "I_kwDOJaEkaM5pQ52B",
       "title": "Change Client Attestation JWT to SD-JWT",
       "url": "https://github.com/vcstuff/draft-looker-oauth-attestation-based-client-authentication/issues/20",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "paulbastian",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "If we use SD-JWT instead of JWT for Client Attestation, things might be easier and its a good test case for using SD-JWT without Disclosures",
       "createdAt": "2023-06-20T19:38:28Z",
-      "updatedAt": "2023-06-20T19:38:28Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2023-07-07T15:36:19Z",
+      "closedAt": "2023-07-07T15:36:19Z",
+      "comments": [
+        {
+          "author": "Sakurann",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "SD-JWT VC as defined in [draft-terbu-sd-jwt-vc](https://github.com/vcstuff/draft-terbu-sd-jwt-vc) without SD, right? (we should differentiate with core sd-jwt)",
+          "createdAt": "2023-07-06T19:01:00Z",
+          "updatedAt": "2023-07-06T19:01:08Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "what is the use-case for the wallet attestation with selective disclosure?",
+          "createdAt": "2023-07-06T19:09:01Z",
+          "updatedAt": "2023-07-06T19:09:01Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "COLLABORATOR",
+          "body": "we probably don't need selective disclosure. SD-JWT-VC gives some feature like easy holder-binding with tilde and key discovery etc that we would need replicate with plain JWTs",
+          "createdAt": "2023-07-06T19:18:51Z",
+          "updatedAt": "2023-07-06T19:18:51Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "COLLABORATOR",
+          "body": "whether to rely on SD-JWT or SD-JWT-VC is yet another option to discuss",
+          "createdAt": "2023-07-06T19:19:37Z",
+          "updatedAt": "2023-07-06T19:19:37Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "COLLABORATOR",
+          "body": "in the discussion on July 6th, it was agreed to stay with plain JWT for now",
+          "createdAt": "2023-07-07T15:36:19Z",
+          "updatedAt": "2023-07-07T15:36:19Z"
+        }
+      ]
     },
     {
       "number": 24,
@@ -654,6 +720,30 @@
       "updatedAt": "2023-07-05T20:43:17Z",
       "closedAt": "2023-07-05T20:43:17Z",
       "comments": []
+    },
+    {
+      "number": 27,
+      "id": "I_kwDOJaEkaM5q6iJF",
+      "title": "Send Client Attestation with Authorization Request instead of Token Request",
+      "url": "https://github.com/vcstuff/draft-looker-oauth-attestation-based-client-authentication/issues/27",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "There is an idea to send the Client attestation already in Authorization Request or PAR instead of with the Token Request.\r\nI see the following advantages:\r\n - the client attestation could act as some kind of mobile capability descriptor, thus allowing the Authorization Server(Issuer) to check these before the user performs user authentication, otherwise this could result in poor UX as the user authenticates and the AS realizes only afterwards in Token Request that the level of client attestation is not enough (e.g. wallet can only handle key type xyz or LoA low)\r\n\r\nI see the following disadvantage:\r\n- some flows do not require Authorization Request\r\n- the user usually does not give consent before sending Authorization Request",
+      "createdAt": "2023-07-07T15:20:37Z",
+      "updatedAt": "2023-07-07T15:23:07Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "tlodderstedt",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The client attestation can for sure be used to authenticate with PAR. The HAIP already requires that. ",
+          "createdAt": "2023-07-07T15:23:06Z",
+          "updatedAt": "2023-07-07T15:23:06Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -2010,6 +2100,291 @@
           "createdAt": "2023-07-05T20:42:57Z",
           "updatedAt": "2023-07-05T20:42:57Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "id": "PR_kwDOJaEkaM5U1poR",
+      "title": "add example",
+      "url": "https://github.com/vcstuff/draft-looker-oauth-attestation-based-client-authentication/pull/26",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "<!-- If this pull request closes an issue, please mention the issue number below -->\r\nCloses # <!-- Issue # here -->\r\n\r\n## \ud83d\udcd1 Description\r\n<!-- Add a brief description of the pr -->\r\n\r\n<!-- You can also choose to add a list of changes and if they have been completed or not by using the markdown to-do list syntax\r\n- [ ] Not Completed\r\n- [x] Completed\r\n-->\r\n\r\n## Preview Link\r\n\r\n<!-- Update the link below to provide reviewers with a convenient link to view a rendered version of the PR-->\r\n<!-- In general the link should be of the form https://github.com/<repo-name>/<branch-name>/<draft-name>.html-->\r\n\r\n[click here for rendered preview of PR](https://github.com/<repo-name>/<branch-name>/<draft-name>.html)",
+      "createdAt": "2023-07-06T18:59:16Z",
+      "updatedAt": "2023-07-07T17:00:25Z",
+      "baseRepository": "vcstuff/draft-looker-oauth-attestation-based-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "4eb06888fbe89c8129babc26f501a0693a600510",
+      "headRepository": "paulbastian/draft-looker-oauth-attested-key-based-client-authentication",
+      "headRefName": "example",
+      "headRefOid": "8816f3015746c0974862cfa0e96f7e4c44e0dc27",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJaEkaM5abgTJ",
+          "commit": {
+            "abbreviatedOid": "a5e3fa1"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-06T19:14:50Z",
+          "updatedAt": "2023-07-06T19:14:50Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\n# Appendix A IANA Considerations\r\n```",
+              "createdAt": "2023-07-06T19:14:50Z",
+              "updatedAt": "2023-07-06T19:14:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5abkQ9",
+          "commit": {
+            "abbreviatedOid": "f7f835c"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-06T19:27:55Z",
+          "updatedAt": "2023-07-06T19:27:56Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "```suggestion\r\n\t\"typ\": \"vc+sd-jwt\",\r\n```",
+              "createdAt": "2023-07-06T19:27:55Z",
+              "updatedAt": "2023-07-06T19:27:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5abpZy",
+          "commit": {
+            "abbreviatedOid": "27016e1"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-06T19:42:55Z",
+          "updatedAt": "2023-07-06T19:42:55Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "```suggestion\r\n\t\"typ\": \"wallet-attestation+jwt\",\r\n\t\"alg\": \"ES256\",\r\n\t\"kid\": \"1\"\r\n}\r\n.\r\n{\r\n\t\"iss\": \"https://attestation-service.ssi.tir.budru.de\",\r\n\t\"sub\" : \"https://lissi.org\",\r\n\t\"iat\": 1541493724,\r\n\t\"exp\": 1516247022,\r\n\t\"wallet_name\": \"Lissi Dev\",\r\n```",
+              "createdAt": "2023-07-06T19:42:55Z",
+              "updatedAt": "2023-07-06T19:42:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5afHlN",
+          "commit": {
+            "abbreviatedOid": "33af8c0"
+          },
+          "author": "tlodderstedt",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2023-07-07T07:10:57Z",
+          "updatedAt": "2023-07-07T07:12:28Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "```suggestion\r\n\t\"iss\": \"https://wallet.example.com\",\r\n```",
+              "createdAt": "2023-07-07T07:10:57Z",
+              "updatedAt": "2023-07-07T07:12:28Z"
+            },
+            {
+              "originalPosition": 28,
+              "body": "```suggestion\r\n\t\"sub\" : \"https://wallet.example.com\"\",\r\n```",
+              "createdAt": "2023-07-07T07:11:14Z",
+              "updatedAt": "2023-07-07T07:12:28Z"
+            },
+            {
+              "originalPosition": 35,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2023-07-07T07:11:28Z",
+              "updatedAt": "2023-07-07T07:12:28Z"
+            },
+            {
+              "originalPosition": 17,
+              "body": "If you mention eIDAS terms, like \"Type-1 configuration\", you also need to add a reference to the ARF.",
+              "createdAt": "2023-07-07T07:12:17Z",
+              "updatedAt": "2023-07-07T07:12:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5afWY8",
+          "commit": {
+            "abbreviatedOid": "33af8c0"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-07T07:34:11Z",
+          "updatedAt": "2023-07-07T07:34:12Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "```suggestion\r\n\t\"key_type\" : \"STRONGBOX\",\r\n```",
+              "createdAt": "2023-07-07T07:34:12Z",
+              "updatedAt": "2023-07-07T07:34:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5afXGc",
+          "commit": {
+            "abbreviatedOid": "33af8c0"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2023-07-07T07:35:24Z",
+          "updatedAt": "2023-07-07T07:35:58Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "```suggestion\r\n```\r\n\r\nWhy the attestation should disclose information like these?\r\nProbably the User doesn't want to disclose the device name and the wallet version",
+              "createdAt": "2023-07-07T07:35:24Z",
+              "updatedAt": "2023-07-07T07:35:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5ag2bI",
+          "commit": {
+            "abbreviatedOid": "33af8c0"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-07T10:54:41Z",
+          "updatedAt": "2023-07-07T10:54:41Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "I would rename this to attestation-service.com to signalize that these could be different?",
+              "createdAt": "2023-07-07T10:54:41Z",
+              "updatedAt": "2023-07-07T10:54:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5ag4pN",
+          "commit": {
+            "abbreviatedOid": "33af8c0"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-07T11:00:43Z",
+          "updatedAt": "2023-07-07T11:00:43Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "\"wallet_name\" is meant as a human readable name of the wallet solution, the technical identifier for a wallet solution would be registered as \"sub\"\r\n\"wallet_version\" is the version of the wallet instance of the wallet solution. The certification and validity status of a wallet solution probably depends on the version, thus for lookup in a trust registry the version is useful",
+              "createdAt": "2023-07-07T11:00:43Z",
+              "updatedAt": "2023-07-07T11:00:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5ahYBN",
+          "commit": {
+            "abbreviatedOid": "33af8c0"
+          },
+          "author": "tlodderstedt",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-07T12:13:01Z",
+          "updatedAt": "2023-07-07T12:13:01Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "I see some value in the wallet name. wrt the version, as we discussed yesterday, I would assume whatever is needed to lookup data about the authorization of the wallet should be encoded in the iss or sub value. ",
+              "createdAt": "2023-07-07T12:13:01Z",
+              "updatedAt": "2023-07-07T12:13:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5ahZD-",
+          "commit": {
+            "abbreviatedOid": "33af8c0"
+          },
+          "author": "tlodderstedt",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-07T12:14:48Z",
+          "updatedAt": "2023-07-07T12:14:48Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "I think this is a special case, which requires explanation. If you provide text, I could incorporate into https://github.com/vcstuff/oid4vc-haip-sd-jwt-vc/pull/52\r\n\r\nI would like to keep the example as simple as possible.  \r\n\r\n",
+              "createdAt": "2023-07-07T12:14:48Z",
+              "updatedAt": "2023-07-07T12:15:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5ajtJm",
+          "commit": {
+            "abbreviatedOid": "33af8c0"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-07T17:00:01Z",
+          "updatedAt": "2023-07-07T17:00:02Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "added attested security context instead",
+              "createdAt": "2023-07-07T17:00:02Z",
+              "updatedAt": "2023-07-07T17:00:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJaEkaM5ajtRO",
+          "commit": {
+            "abbreviatedOid": "33af8c0"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-07T17:00:24Z",
+          "updatedAt": "2023-07-07T17:00:25Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "added version to sub",
+              "createdAt": "2023-07-07T17:00:24Z",
+              "updatedAt": "2023-07-07T17:00:25Z"
+            }
+          ]
         }
       ]
     }
