@@ -2,7 +2,7 @@
 
 
 
-Web Authorization Protocol                                     T. Looker
+Network Working Group                                          T. Looker
 Internet-Draft                                                     MATTR
 Intended status: Informational                                P. Bastian
 Expires: 11 January 2024                            Bundesdruckerei GmbH
@@ -25,9 +25,11 @@ About This Document
 
    This note is to be removed before publishing as an RFC.
 
-   Status information for this document may be found at
-   https://datatracker.ietf.org/doc/draft-looker-oauth-attestation-
-   based-client-authentication/.
+   The latest revision of this draft can be found at
+   https://vcstuff.github.io/draft-looker-oauth-jwt-cwt-status-list/
+   draft-looker-oauth-jwt-cwt-status-list.html.  Status information for
+   this document may be found at https://datatracker.ietf.org/doc/draft-
+   looker-oauth-attestation-based-client-authentication/.
 
 Status of This Memo
 
@@ -55,10 +57,7 @@ Copyright Notice
    Provisions Relating to IETF Documents (https://trustee.ietf.org/
    license-info) in effect on the date of publication of this document.
    Please review these documents carefully, as they describe your rights
-   and restrictions with respect to this document.  Code Components
-   extracted from this document must include Revised BSD License text as
-   described in Section 4.e of the Trust Legal Provisions and are
-   provided without warranty as described in the Revised BSD License.
+   and restrictions with respect to this document.
 
 Table of Contents
 
@@ -408,13 +407,12 @@ iOiJSUzI1[...omitted for brevity...]
    request using the "urn:ietf:params:oauth:client-assertion-type:jwt-
    client-attestation" client authentication method MUST bind the
    refresh token to the client instance, and NOT just the client as
-   specified in section 6 [@!RFC6749].  To prove this binding, the
-   client instance MUST authenticate itself to the authorization server
-   when refreshing an access token using the
-   "urn:ietf:params:oauth:client-assertion-type:jwt-client-attestation"
-   authentication method.  The client MUST also use the same Client
-   Attestation that was used for authentication when the refresh token
-   was issued.
+   specified in section 6 [RFC6749].  To prove this binding, the client
+   instance MUST authenticate itself to the authorization server when
+   refreshing an access token using the "urn:ietf:params:oauth:client-
+   assertion-type:jwt-client-attestation" authentication method.  The
+   client MUST also use the same Client Attestation that was used for
+   authentication when the refresh token was issued.
 
 6.  Privacy Considerations
 

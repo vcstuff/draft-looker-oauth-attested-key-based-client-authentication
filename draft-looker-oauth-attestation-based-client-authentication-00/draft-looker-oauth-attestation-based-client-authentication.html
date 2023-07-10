@@ -1059,7 +1059,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
-<dd class="workgroup">Web Authorization Protocol</dd>
+<dd class="workgroup">Network Working Group</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
 <dd class="internet-draft">draft-looker-oauth-attestation-based-client-authentication-latest</dd>
 <dt class="label-published">Published:</dt>
@@ -1094,6 +1094,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
       </h2>
 <p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
 <p id="section-note.1-2">
+        The latest revision of this draft can be found at <span><a href="https://vcstuff.github.io/draft-looker-oauth-jwt-cwt-status-list/draft-looker-oauth-jwt-cwt-status-list.html">https://vcstuff.github.io/draft-looker-oauth-jwt-cwt-status-list/draft-looker-oauth-jwt-cwt-status-list.html</a></span>.
         Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-looker-oauth-attestation-based-client-authentication/">https://datatracker.ietf.org/doc/draft-looker-oauth-attestation-based-client-authentication/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
@@ -1132,10 +1133,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
             publication of this document. Please review these documents
             carefully, as they describe your rights and restrictions with
-            respect to this document. Code Components extracted from this
-            document must include Revised BSD License text as described in
-            Section 4.e of the Trust Legal Provisions and are provided without
-            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+            respect to this document.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="toc">
@@ -1480,7 +1478,7 @@ iOiJSUzI1[...omitted for brevity...]
         <h3 id="name-refresh-token-binding">
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-refresh-token-binding" class="section-name selfRef">Refresh token binding</a>
         </h3>
-<p id="section-5.2-1">Authorization servers issuing a refresh token in response to a token request using the "urn:ietf:params:oauth:client-assertion-type:jwt-client-attestation" client authentication method <span class="bcp14">MUST</span> bind the refresh token to the client instance, and NOT just the client as specified in section 6 [@!RFC6749]. To prove this binding, the client instance <span class="bcp14">MUST</span> authenticate itself to the authorization server when refreshing an access token using the "urn:ietf:params:oauth:client-assertion-type:jwt-client-attestation" authentication method. The client <span class="bcp14">MUST</span> also use the same Client Attestation that was used for authentication when the refresh token was issued.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-1">Authorization servers issuing a refresh token in response to a token request using the "urn:ietf:params:oauth:client-assertion-type:jwt-client-attestation" client authentication method <span class="bcp14">MUST</span> bind the refresh token to the client instance, and NOT just the client as specified in section 6 <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>. To prove this binding, the client instance <span class="bcp14">MUST</span> authenticate itself to the authorization server when refreshing an access token using the "urn:ietf:params:oauth:client-assertion-type:jwt-client-attestation" authentication method. The client <span class="bcp14">MUST</span> also use the same Client Attestation that was used for authentication when the refresh token was issued.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
