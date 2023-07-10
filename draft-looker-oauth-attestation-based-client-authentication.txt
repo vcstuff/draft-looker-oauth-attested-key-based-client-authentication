@@ -5,8 +5,8 @@
 Web Authorization Protocol                                     T. Looker
 Internet-Draft                                                     MATTR
 Intended status: Informational                                P. Bastian
-Expires: 6 January 2024                             Bundesdruckerei GmbH
-                                                             5 July 2023
+Expires: 11 January 2024                            Bundesdruckerei GmbH
+                                                            10 July 2023
 
 
            OAuth 2.0 Attestation-Based Client Authentication
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 January 2024.
+   This Internet-Draft will expire on 11 January 2024.
 
 Copyright Notice
 
@@ -75,7 +75,7 @@ Table of Contents
    6.  Privacy Considerations
      6.1.  Client Instance Tracking Across Authorization Servers
    7.  Security Considerations
-   8.  IANA Considerations
+   8.  Appendix A IANA Considerations
      8.1.  Sub-Namespace Registration of urn:ietf:params:oauth:client-
            assertion-type:jwt-client-attestation
      8.2.  Registration of attest_jwt_client_auth Token Endpoint
@@ -83,6 +83,8 @@ Table of Contents
    9.  References
      9.1.  Normative References
      9.2.  Informative References
+   Appendix A.  Additional Examples
+     A.1.  Wallet Instance Attestation
    Acknowledgments
    Authors' Addresses
 
@@ -429,7 +431,7 @@ iOiJSUzI1[...omitted for brevity...]
 
    The guidance provided by [RFC7519] and [RFC8725] applies.
 
-8.  IANA Considerations
+8.  Appendix A IANA Considerations
 
 8.1.  Sub-Namespace Registration of urn:ietf:params:oauth:client-
       assertion-type:jwt-client-attestation
@@ -517,6 +519,9 @@ iOiJSUzI1[...omitted for brevity...]
 
 9.2.  Informative References
 
+   [ARF]      "The European Digital Identity Wallet Architecture and
+              Reference Framework", n.d..
+
    [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
               RFC 6749, DOI 10.17487/RFC6749, October 2012,
               <https://www.rfc-editor.org/rfc/rfc6749>.
@@ -525,6 +530,41 @@ iOiJSUzI1[...omitted for brevity...]
               "Assertion Framework for OAuth 2.0 Client Authentication
               and Authorization Grants", RFC 7521, DOI 10.17487/RFC7521,
               May 2015, <https://www.rfc-editor.org/rfc/rfc7521>.
+
+Appendix A.  Additional Examples
+
+A.1.  Wallet Instance Attestation
+
+   This non-normative example shows a client attestations used as an
+   wallet instance attestation in the context of eIDAS 2.0 [ARF], e.g.
+   to secure a Type-1 configuration credential.  The additional claims
+   describe the wallet's device binding und user binding capabilities
+   and the achievable level of assurance.
+
+{
+        "typ": "wallet-attestation+jwt",
+        "alg": "ES256",
+        "kid": "1"
+}
+.
+{
+        "iss": "https://wallet-provider.com",
+        "sub": "https://wallet-provider.com/solution/wallet-1.6.0",
+        "iat": 1541493724,
+        "exp": 1516247022,
+        "wallet_name": "human readable wallet name",
+        "key_type" : "STRONGBOX",
+        "user_authentication" : "SYSTEM_PIN",
+        "attested_security_context" : "https://eu-trust-list.eu/asc/high",
+        "cnf": {
+                "jwk" : {
+                        "kty": "EC",
+                        "crv": "P-256",
+                        "x": "TCAER19Zvu3OHF4j4W4vfSVoHIP1ILilDls7vCeGemc",
+                        "y": "ZxjiWWbZMQGHVWKVQ4hbSIirsVfuecCE6t4jT9F2HZQ"
+                }
+        }
+}
 
 Acknowledgments
 
